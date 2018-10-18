@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LAB07_Collections
 {
-    class Card
+    public class Card
     {
         public string Value;
         public Suits CardSuit;

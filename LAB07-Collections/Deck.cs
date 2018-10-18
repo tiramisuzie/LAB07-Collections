@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace LAB07_Collections
 {
-    class Deck<T>
+    public class Deck<T>
     {
-        private List<Card> DeckCollection = new List<Card>();
+        public List<Card> DeckCollection = new List<Card>();
        
         public void PrintDeck()
         {
@@ -28,9 +28,10 @@ namespace LAB07_Collections
                 if (c.CardSuit == card.CardSuit && c.Value == card.Value)
                 {
                     DeckCollection.Remove(c);
+                    return card;
                 }
             }
-            return card;
+            return null;
         }
 
         public void ReturnSuit(Suits s)
@@ -47,7 +48,7 @@ namespace LAB07_Collections
         }
     }
 
-    enum Suits
+    public enum Suits
     {
         Club,
         Spade,
