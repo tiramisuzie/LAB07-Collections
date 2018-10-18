@@ -13,6 +13,10 @@ namespace LAB07_Collections
             Value = Val;
             CardSuit = Suit;
         }
+        public string ToString()
+        {
+            return Value + " " + CardSuit;
+        }
     }
 
    
