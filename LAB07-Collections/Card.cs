@@ -7,8 +7,8 @@ namespace LAB07_Collections
     class Card
     {
         public string Value;
-        public string CardSuit;
-        public Card (string Val, string Suit)
+        public Suits CardSuit;
+        public Card (string Val, Suits Suit)
         {
             Value = Val;
             CardSuit = Suit;
