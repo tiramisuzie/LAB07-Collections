@@ -1,33 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace LAB07_Collections
 {
-    class Deck
+    class Deck<T>
     {
-        public string[] CardValue = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
-        public Suits[] SuitValue = { Suits.Club, Suits.Spade, Suits.Diamond, Suits.Heart };
-        public Card[] DeckCollection = new Card[52];
-        public Deck()
-        {
-            int Counter = 0; 
-            for (int i = 0; i < CardValue.Length; i++)
-            {
-                for (int j = 0; j < SuitValue.Length; j++)
-                {
-                    DeckCollection[Counter] = new Card(CardValue[i], SuitValue[j]);
-                    Counter++;
-                }
-            }
-        }
-
+        private List<Card> DeckCollection = new List<Card>();
+       
         public void PrintDeck()
         {
             foreach (Card C in DeckCollection)
             {
                 Console.WriteLine(C.ToString());
             }
+        }
+
+        public void Add(Card card)
+        {
+            DeckCollection.Add(card);
+        }
+
+        public Card Remove(Card card)
+        {
+            Card [] temp = DeckCollection.ToArray();
+            foreach( Card c in temp)
+            {
+                if (c.CardSuit == card.CardSuit && c.Value == card.Value)
+                {
+                    DeckCollection.Remove(c);
+                }
+            }
+            return card;
+        }
+
+        public void ReturnSuit(Suits s)
+        {
+            Card[] temp = DeckCollection.ToArray();
+            foreach(Card c in temp)
+            {
+                if (c.CardSuit == s)
+                {
+                    Console.WriteLine(c.ToString());
+                }
+            }
+
         }
     }
 
