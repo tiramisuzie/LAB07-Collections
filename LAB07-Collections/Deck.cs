@@ -1,49 +1,69 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace LAB07_Collections
 {
     public class Deck<T>
     {
-        public List<Card> DeckCollection = new List<Card>();
-       
-        public void PrintDeck()
+        public T[] deck = new T[1];
+        public int count = 0;
+
+        public void Add(T card)
         {
-            foreach (Card C in DeckCollection)
+            if (count == deck.Length)
             {
-                Console.WriteLine(C.ToString());
+                Array.Resize(ref deck, deck.Length * 2);
             }
-        }
 
-        public void Add(Card card)
-        {
-            DeckCollection.Add(card);
+            deck[count++] = card;
         }
-
-        public Card Remove(Card card)
+        
+        public T Remove(T card)
         {
-            Card [] temp = DeckCollection.ToArray();
-            foreach( Card c in temp)
+            for (int i = 0; i < count; i++)
             {
-                if (c.CardSuit == card.CardSuit && c.Value == card.Value)
+                if (deck[i].Equals(card))
                 {
-                    DeckCollection.Remove(c);
+                    deck[i] = default(T);
+                    count--;
                     return card;
                 }
             }
-            return null;
+
+            return default(T);
         }
 
-        public void ReturnSuit(Suits s)
+        public T[] ReturnSuit(Suits s)
         {
-            Card[] temp = DeckCollection.ToArray();
-            foreach(Card c in temp)
+            T[] cardsOfSameSuit = new T[1];
+
+
+            int counter = 0;
+
+            for (int i = 0; i < deck.Length; i++)
             {
-                if (c.CardSuit == s)
+                if (deck[i] != null)
                 {
-                    Console.WriteLine(c.ToString());
+
+                    Type c = deck[i].GetType();
+                    PropertyInfo prop = c.GetProperty("CardSuit");
+
+                    Suits suit = (Suits) prop.GetValue(deck[i]);
+                    
+                    if (suit == s)
+                    {
+                        if (counter >= cardsOfSameSuit.Length)
+                        {
+                            Array.Resize(ref cardsOfSameSuit, cardsOfSameSuit.Length+1);
+                        }
+
+                        cardsOfSameSuit[counter] = deck[i];
+                        counter++;
+                    }
                 }
             }
+            return cardsOfSameSuit;
 
         }
     }

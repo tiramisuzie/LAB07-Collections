@@ -1,6 +1,5 @@
-using System;
-using Xunit;
 using LAB07_Collections;
+using Xunit;
 
 namespace DeckTests
 {
@@ -10,11 +9,12 @@ namespace DeckTests
         public void ShouldAddCardToDeck()
         {
             Deck<Card> deck = new Deck<Card>();
-            Assert.Empty(deck.DeckCollection);
+            Assert.Equal(0, deck.count);
 
             deck.Add(new Card("2", Suits.Heart));
 
-            Assert.Single(deck.DeckCollection);
+            Assert.Equal("2", deck.deck[0].Value);
+            Assert.Equal(Suits.Heart, deck.deck[0].CardSuit);
         }
 
         [Fact]
@@ -29,12 +29,13 @@ namespace DeckTests
         [Fact]
         public void ShouldRemoveCardFromDeck()
         {
+            Card card = new Card("2", Suits.Heart);
             Deck<Card> deck = new Deck<Card>();
-            deck.Add(new Card("2", Suits.Heart));
-            Assert.Single(deck.DeckCollection);
+            deck.Add(card);
+            Assert.Single(deck.deck);
 
-            Card removed = deck.Remove(new Card("2", Suits.Heart));
-            Assert.Empty(deck.DeckCollection);
+            Card removed = deck.Remove(card);
+            Assert.Null(deck.deck[0]);
         }
 
         [Fact]
@@ -42,10 +43,10 @@ namespace DeckTests
         {
             Deck<Card> deck = new Deck<Card>();
             deck.Add(new Card("2", Suits.Heart));
-            Assert.Single(deck.DeckCollection);
+            Assert.Single(deck.deck);
 
             Card removed = deck.Remove(new Card("3", Suits.Heart));
-            Assert.Single(deck.DeckCollection);
+            Assert.Single(deck.deck);
             Assert.Null(removed);
         }
     }
